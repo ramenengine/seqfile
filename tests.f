@@ -11,14 +11,14 @@ create s %mystruct struct,
     3 s s.c !
     4 s s.d ! 
 
-0 0 class: [myclass]
+0 0 class: _myclass
     var a
     var b
     var c
     var d
 ;class
 
-[myclass] static value instance
+_myclass static value instance
     instance as
     1 a !
     2 b !
@@ -47,7 +47,7 @@ s" prg/seqfile/test.dat" open to fid
     s s.a @ 1 test
     s s.d @ 4 test
 
-    [myclass] instance /object
+    _myclass instance /object
     instance 's a @ 0 test
     instance fid geto
     instance 's a @ 1 test
