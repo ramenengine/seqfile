@@ -3,49 +3,48 @@ define seqfileing
 0 value fid
 variable temp
 
-: open  2dup file-exists not if r/w create-file else r/w open-file then throw ;
-: close  close-file drop ;
+: open  ( adr c - )
+    2dup file-exists not if r/w create-file else r/w open-file then throw to fid ;
+
+: close  ( - )
+    fid close-file drop ;
 
 : get  ( adr #bytes fid - )
-    read-file nip throw ;
+    fid read-file nip throw ;
 
-: gets  ( adr struct fid - )
-    >r struct.size @ r> get ;
+: gets  ( adr struct - )
+    struct.size @ get ;
 
-: geto  ( obj fid - )
-    >r objdata r> get ;
+: getobj  ( obj - )
+    objdata get ;
 
-: getn ( fid - n )
-    >r temp cell r> get
-    temp @ ;
+: getn ( - n )
+    temp cell get temp @ ;
     
-: getc ( fid - n )
-    >r temp #1 r> get
-    temp c@ ;
+: getc ( - n )
+    temp #1 get temp c@ ;
 
-: get$  ( adr fid - )
-    dup >r  getn over over swap !  ( n adr - )
-    cell u+  ( adr+cell c )  r> get ;
+: get$  ( adr - )
+    getn over over swap !  ( n adr - )
+    cell u+  ( adr+cell c ) get ;
 
-: put  ( adr #bytes fid - )
-    write-file throw ;
+: put  ( adr #bytes - )
+    fid write-file throw ;
 
-: puts  ( adr struct fid - )
-    >r struct.size @ r> put ;
+: puts  ( adr struct - )
+    struct.size @ put ;
 
-: puto  ( obj fid - )
-    >r objdata r> put ;
+: putobj  ( obj - )
+    objdata put ;
 
-: putn ( n fid - )
-    >r temp !
-    temp cell r> put ;
+: putn ( n - )
+    temp ! temp cell put ;
     
 : putc ( n fid - )
-    >r 0 temp !  temp c! 
-    temp #1 r> put ;
+    0 temp !  temp c!  temp #1 put ;
 
-: put$ ( adr c fid - )
-    2dup putn put ;
+: put$ ( adr c - )
+    dup putn put ;
 
 
 using forth

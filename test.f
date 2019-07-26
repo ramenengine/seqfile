@@ -9,4 +9,4 @@ using seqfileing
 
 
 s" prg/seqfile/tests.f" ' included catch
-fid close  throw
+close  throw
